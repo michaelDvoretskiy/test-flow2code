@@ -1,0 +1,164 @@
+1. Create database
+2. Run migration "php artisan migrate"
+3. Run seeder to populate "countries" and "movie_types" tables "php artisan db:seed"
+4. Run "php artisan serve" to use project locally on http://127.0.0.1:8000
+
+Routes:
+
+1. GET /api/countries
+returns the list of available countries
+
+2. GET /api/movie-types
+returns the list of available movie types
+
+3. GET /api/movies
+returns the list of all movies
+
+response example
+status 200
+body
+[
+    {
+        "id": 1,
+        "title": "Hobbit",
+        "description": "first part",
+        "imgPath": "/images/movies/d48cafb2-6dd1-4a9d-a65d-950e6b104f2a.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Hobbit 2",
+        "description": "second part",
+        "imgPath": null
+    }
+]
+
+4. GET /api/movies?title=2
+returns the list of movies filtered by title (contains value)
+
+response example
+status 200
+body
+[
+    {
+        "id": 2,
+        "title": "Hobbit 2",
+        "description": "second part",
+        "imgPath": null
+    }
+]
+
+5. GET /api/movies/{movieId}
+returns the movie for with id=movieId
+
+response example, if found
+status 200
+body
+{
+    "id": 1,
+    "title": "Hobbit",
+    "description": "first part",
+    "imgPath": "/images/movies/d48cafb2-6dd1-4a9d-a65d-950e6b104f2a.jpg",
+    "types": [
+        {
+            "id": 1,
+            "name": "Comedy"
+        },
+        {
+            "id": 2,
+            "name": "Drama"
+        }
+    ],
+    "country": {
+        "id": 1,
+        "name": "United  States"
+    }
+}
+
+response example, movie not found
+status 404
+body
+{
+    "status": false,
+    "message": "The movie not found"
+}
+
+6. POST /api/movies
+creates new movie
+
+body (example)
+{
+    "title": "Hobbit",
+    "description": "first part",
+    "countryId": 1,
+    "types": [1, 2]
+}
+
+response example, if created
+status 200
+body
+{
+    "status": true,
+    "message": "Movie was created successfully",
+    "movieId": 1
+}
+
+response example, validation error
+status 422
+body
+{
+    "status": false,
+    "message": "Validation errors",
+    "data": {
+        "title": [
+            "The title field is required."
+        ]
+    }
+}
+
+7. POST /api/movies/cover/{movieId}
+set cover for the movie with id=movieId
+
+form-data
+{
+    "coverFile": image file
+}
+
+response example, updated successfully
+status 200
+body
+{
+    "status": true,
+    "message": "Cover for the movie was updated successfully",
+    "movieId": 1
+}
+
+response example, movie not found
+status 404
+body
+{
+    "status": false,
+    "message": "The movie not found"
+}
+
+response example, validation error
+status 422
+body
+{
+    "status": false,
+    "message": "Validation errors",
+    "data": {
+        "coverFile": [
+            "The cover file field is required."
+        ]
+    }
+}
+
+8. PATCH|PUT /api/movies/{movieId}
+updates movie with id=movieId
+body is the same to POST /api/movies (creates new movie)
+responses are the same to POST /api/movies (creates new movie)
+
+9. DELETE /api/movies/{movieId}
+removes movie with id=movieId
+body is empty
+responses are the same to POST /api/movies (creates new movie)
