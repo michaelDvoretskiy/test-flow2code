@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\MovieController;
 use \App\Http\Controllers\CountryController;
 use \App\Http\Controllers\MovieTypeController;
+use \App\Http\Controllers\MovieReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,3 +25,4 @@ Route::resource('movies', MovieController::class);
 Route::post('movies/cover/{movie}', [MovieController::class, 'updateCover']);
 Route::get('countries', [CountryController::class, 'index']);
 Route::get('movie-types', [MovieTypeController::class, 'index']);
+Route::post('movie-reviews', [MovieReviewController::class, 'store']);

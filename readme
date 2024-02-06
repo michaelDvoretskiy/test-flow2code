@@ -71,7 +71,21 @@ body
     "country": {
         "id": 1,
         "name": "United  States"
-    }
+    },
+     "reviews": [
+        {
+            "id": 1,
+            "username": "Vasya",
+            "mark": 5,
+            "description": "very good movie"
+        },
+        {
+            "id": 2,
+            "username": "Petya",
+            "mark": 3,
+            "description": "good movie"
+        }
+    ]
 }
 
 response example, movie not found
@@ -162,3 +176,36 @@ responses are the same to POST /api/movies (creates new movie)
 removes movie with id=movieId
 body is empty
 responses are the same to POST /api/movies (creates new movie)
+
+10. POST /api/movie-reviews
+creates new movie review
+
+body (example)
+{
+    "description": "good movie",
+    "movieId": 1,
+    "mark": 3,
+    "username": "Petya"
+}
+
+response example, if created
+status 200
+body
+{
+    "status": true,
+    "message": "Movie review was created successfully",
+    "movieReviewId": 3
+}
+
+response example, validation error
+status 422
+body
+{
+    "status": false,
+    "message": "Validation errors",
+    "data": {
+        "movieId": [
+            "The selected movie id is invalid."
+        ]
+    }
+}

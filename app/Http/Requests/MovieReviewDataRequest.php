@@ -7,10 +7,9 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
-class MovieDataRequest extends FormRequest
+class MovieReviewDataRequest extends FormRequest
 {
     use ValidationErrorTrait;
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -29,25 +28,14 @@ class MovieDataRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:2|max:100',
-            'description' => 'required|string|min:5|max:500',
-            'countryId' => [
+            'movieId' => [
                 'required',
                 'int',
-                Rule::exists('countries', 'id'),
+                Rule::exists('movies', 'id'),
             ],
-            'types' => [
-                'required',
-                'array',
-                function ($attribute, $value, $fail) {
-                    foreach ($value as $id) {
-                        if (!is_int($id)) {
-                            $fail("The $attribute must contain only integers.");
-                        }
-                    }
-                },
-                Rule::exists('movie_types', 'id')
-            ]
+            'mark' => 'required|int|min:0|max:10',
+            'description' => 'required|string|min:5|max:300',
+            'username' => 'required|string|min:3|max:50'
         ];
     }
 
