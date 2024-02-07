@@ -32,10 +32,18 @@ class MovieReviewDataRequest extends FormRequest
                 'required',
                 'int',
                 Rule::exists('movies', 'id'),
+                Rule::unique('movie_reviews', 'movie_id')->where('username', $this->input('username'))
             ],
             'mark' => 'required|int|min:0|max:10',
             'description' => 'required|string|min:5|max:300',
             'username' => 'required|string|min:3|max:50'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'movieId.unique' => 'Review for selected movie from selected username already exists.',
         ];
     }
 

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('username', 100);
             $table->unsignedTinyInteger('mark');
             $table->string('description', 200);
+            $table->unique(['movie_id', 'username']);
         });
     }
 
