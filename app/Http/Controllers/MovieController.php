@@ -25,14 +25,6 @@ class MovieController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return ['message' => 'no UI is here'];
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(MovieDataRequest $request)
@@ -57,14 +49,6 @@ class MovieController extends Controller
         } catch(MovieNotFoundException $e) {
             $this->throw404($e->getMessage());
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit()
-    {
-        return ['message' => 'no UI is here'];
     }
 
     /**
