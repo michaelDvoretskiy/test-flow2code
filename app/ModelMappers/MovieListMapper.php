@@ -6,7 +6,7 @@ use App\Models\Movie;
 
 class MovieListMapper
 {
-    public function __invoke(Movie $elem)
+    public function __invoke(Movie $elem): array
     {
         return [
             'id' => $elem->id,

@@ -2,7 +2,9 @@
 
 namespace App\Interfaces;
 
+use Illuminate\Support\Collection;
+
 interface MovieTypeRepositoryInterface
 {
-    public function getAll();
+    public function getAll(): Collection;
 }

@@ -6,5 +6,5 @@ use Illuminate\Http\UploadedFile;
 
 Interface MovieReviewServiceInretface
 {
-    public function createMovieReview(array $movieReviewData);
+    public function createMovieReview(array $movieReviewData): int;
 }

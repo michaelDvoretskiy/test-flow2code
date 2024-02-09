@@ -10,6 +10,7 @@ use App\ModelMappers\MovieMapper;
 use App\Models\Movie;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 
 class MovieService implements MovieServiceInretface
 {
@@ -22,7 +23,7 @@ class MovieService implements MovieServiceInretface
     {
     }
 
-    public function getMovies(string $title)
+    public function getMovies(string $title): Collection
     {
         $movies = $this->movieRepository->getAll($title);
         return $movies->map(
@@ -30,19 +31,19 @@ class MovieService implements MovieServiceInretface
         );
     }
 
-    public function getMovie(int $id)
+    public function getMovie(int $id): array
     {
         return ($this->movieMapper)($this->findMovieOrException($id));
     }
 
-    public function removeMovie(int $id)
+    public function removeMovie(int $id): void
     {
         $movie = $this->findMovieOrException($id);
         $this->fileService->removeMovieCover($movie->cover_path);
         $this->movieRepository->removeOne($movie);
     }
 
-    public function storeMovieCover(int $id, UploadedFile $file)
+    public function storeMovieCover(int $id, UploadedFile $file): void
     {
         $movie = $this->findMovieOrException($id);
         if ($movie->cover_path ?? false) {
@@ -52,7 +53,7 @@ class MovieService implements MovieServiceInretface
         $this->movieRepository->setCover($movie, $fileName);
     }
 
-    public function createMovie(array $movieData)
+    public function createMovie(array $movieData): int
     {
         $movie = new Movie();
         $this->movieRepository->update($movie, $movieData);
@@ -60,12 +61,12 @@ class MovieService implements MovieServiceInretface
         return $movie->id;
     }
 
-    public function updateMovie(int $id, array $movieData)
+    public function updateMovie(int $id, array $movieData): void
     {
         $this->movieRepository->update($this->findMovieOrException($id), $movieData);
     }
 
-    private function findMovieOrException(int $id)
+    private function findMovieOrException(int $id): ?Movie
     {
         $movie = $this->movieRepository->getOne($id);
         if (!$movie) {

@@ -2,7 +2,9 @@
 
 namespace App\Interfaces;
 
+use Illuminate\Support\Collection;
+
 Interface MovieTypeServiceInretface
 {
-    public function getMovieTypes();
+    public function getMovieTypes(): Collection;
 }

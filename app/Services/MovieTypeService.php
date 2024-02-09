@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Interfaces\MovieTypeRepositoryInterface;
 use App\Interfaces\MovieTypeServiceInretface;
 use App\ModelMappers\MovieTypeMapper;
+use Illuminate\Support\Collection;
 
 class MovieTypeService implements MovieTypeServiceInretface
 {
@@ -15,7 +16,7 @@ class MovieTypeService implements MovieTypeServiceInretface
     {
     }
 
-    public function getMovieTypes()
+    public function getMovieTypes(): Collection
     {
         $movieTypes = $this->movieTypeRepository->getAll();
         return $movieTypes->map(

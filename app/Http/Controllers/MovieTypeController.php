@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\MovieTypeServiceInretface;
+use Illuminate\Support\Collection;
 
 class MovieTypeController extends Controller
 {
@@ -14,7 +15,7 @@ class MovieTypeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Collection
     {
         return $this->movieTypeService->getMovieTypes();
     }

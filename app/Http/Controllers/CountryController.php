@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Interfaces\CountryServiceInretface;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Collection;
 
 class CountryController extends Controller
 {
@@ -13,7 +15,7 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Collection
     {
         return $this->countryService->getCountries();
     }

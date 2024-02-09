@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Interfaces\CountryRepositoryInterface;
 use App\Interfaces\CountryServiceInretface;
 use App\ModelMappers\CountryMapper;
+use Illuminate\Support\Collection;
+
 class CountryService implements CountryServiceInretface
 {
     public function __construct(
@@ -14,7 +16,7 @@ class CountryService implements CountryServiceInretface
     {
     }
 
-    public function getCountries()
+    public function getCountries(): Collection
     {
         $countries = $this->countryRepository->getAll();
         return $countries->map(

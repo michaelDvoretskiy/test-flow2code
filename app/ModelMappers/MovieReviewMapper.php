@@ -6,7 +6,7 @@ use App\Models\MovieReview;
 
 class MovieReviewMapper
 {
-    public function __invoke(MovieReview $elem)
+    public function __invoke(MovieReview $elem): array
     {
         return [
             'id' => $elem->id,

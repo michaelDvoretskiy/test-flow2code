@@ -7,7 +7,7 @@ use App\Models\MovieReview;
 
 class MovieReviewService implements MovieReviewServiceInretface
 {
-    public function createMovieReview(array $movieReviewData)
+    public function createMovieReview(array $movieReviewData): int
     {
         $movieReview = new MovieReview();
         $movieReview->description = $movieReviewData['description'];

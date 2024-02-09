@@ -8,6 +8,7 @@ use App\Http\Requests\MovieDataRequest;
 use App\Interfaces\MovieServiceInretface;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
 class MovieController extends Controller
 {
@@ -18,7 +19,7 @@ class MovieController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request): Collection
     {
         $title = $request->get('title', '');
         return $this->movieService->getMovies($title);
@@ -27,7 +28,7 @@ class MovieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MovieDataRequest $request)
+    public function store(MovieDataRequest $request): array
     {
         $movieData = $request->validated();
         $id = $this->movieService->createMovie($movieData);
@@ -42,7 +43,7 @@ class MovieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(int $id): array
     {
         try {
             return $this->movieService->getMovie($id);
@@ -54,7 +55,7 @@ class MovieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(MovieDataRequest $request, int $id)
+    public function update(MovieDataRequest $request, int $id): array
     {
         $movieData = $request->validated();
         try {
@@ -70,7 +71,7 @@ class MovieController extends Controller
         ];
     }
 
-    public function updateCover(MovieCoverRequest $request, int $id)
+    public function updateCover(MovieCoverRequest $request, int $id): array
     {
         try {
             $this->movieService->storeMovieCover($id, $request->file('coverFile'));
@@ -88,7 +89,7 @@ class MovieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(int $id): array
     {
         try {
             $this->movieService->removeMovie($id);
@@ -103,7 +104,7 @@ class MovieController extends Controller
         ];
     }
 
-    private function throw404(string $message)
+    private function throw404(string $message): void
     {
         throw new HttpResponseException(
             response()->json([

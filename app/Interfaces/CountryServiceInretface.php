@@ -2,7 +2,9 @@
 
 namespace App\Interfaces;
 
+use Illuminate\Support\Collection;
+
 Interface CountryServiceInretface
 {
-    public function getCountries();
+    public function getCountries(): Collection;
 }

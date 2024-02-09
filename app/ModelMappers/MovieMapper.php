@@ -14,7 +14,7 @@ class MovieMapper
     {
     }
 
-    public function __invoke(Movie $elem)
+    public function __invoke(Movie $elem): array
     {
         return [
             'id' => $elem->id,

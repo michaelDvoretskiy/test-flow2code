@@ -16,14 +16,14 @@ class MovieReviewController extends Controller
     {
     }
 
-    public function store(MovieReviewDataRequest $request)
+    public function store(MovieReviewDataRequest $request): array
     {
         $movieReviewData = $request->validated();
         $id = $this->movieReviewService->createMovieReview($movieReviewData);
 
         return [
             'status' => true,
-            'message' =>"Movie review was created successfully",
+            'message' => "Movie review was created successfully",
             'movieReviewId' => $id
         ];
     }

@@ -51,7 +51,7 @@ class MovieDataRequest extends FormRequest
         ];
     }
 
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): void
     {
         $this->throwValidationException($validator);
     }

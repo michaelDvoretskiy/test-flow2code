@@ -4,10 +4,11 @@ namespace App\Repositories;
 
 use App\Interfaces\MovieRepositoryInterface;
 use App\Models\Movie;
+use Illuminate\Support\Collection;
 
 class MovieRepository implements MovieRepositoryInterface
 {
-    public function getAll(string $title)
+    public function getAll(string $title): Collection
     {
         if (!$title) {
             return Movie::all();
@@ -15,20 +16,20 @@ class MovieRepository implements MovieRepositoryInterface
         return Movie::where('title', 'LIKE', '%' . $title . '%')->get();
     }
 
-    public function getOne(int $id)
+    public function getOne(int $id): ?Movie
     {
         return Movie::find($id);
     }
-    public function removeOne(Movie $movie)
+    public function removeOne(Movie $movie): void
     {
         $movie->delete();
     }
-    public function setCover(Movie $movie, string $coverPath)
+    public function setCover(Movie $movie, string $coverPath): void
     {
         $movie->cover_path = $coverPath;
         $movie->save();
     }
-    public function update(Movie $movie, array $movieData)
+    public function update(Movie $movie, array $movieData): void
     {
         $movie->title = $movieData['title'];
         $movie->description = $movieData['description'];

@@ -40,14 +40,14 @@ class MovieReviewDataRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'movieId.unique' => 'Review for selected movie from selected username already exists.',
         ];
     }
 
-    public function failedValidation(Validator $validator)
+    public function failedValidation(Validator $validator): void
     {
         $this->throwValidationException($validator);
     }

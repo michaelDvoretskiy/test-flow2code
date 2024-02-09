@@ -7,7 +7,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 trait ValidationErrorTrait
 {
-    public function throwValidationException(Validator $validator)
+    public function throwValidationException(Validator $validator): void
     {
         throw new HttpResponseException(
             response()->json([
