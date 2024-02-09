@@ -28,7 +28,7 @@ class MovieRepository implements MovieRepositoryInterface
         $movie->cover_path = $coverPath;
         $movie->save();
     }
-    public function applyData(Movie $movie, array $movieData)
+    public function update(Movie $movie, array $movieData)
     {
         $movie->title = $movieData['title'];
         $movie->description = $movieData['description'];

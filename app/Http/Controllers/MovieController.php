@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\MovieNotFoundException;
 use App\Http\Requests\MovieCoverRequest;
 use App\Http\Requests\MovieDataRequest;
 use App\Interfaces\MovieServiceInretface;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -50,7 +52,11 @@ class MovieController extends Controller
      */
     public function show(int $id)
     {
-        return $this->movieService->getMovie($id);
+        try {
+            return $this->movieService->getMovie($id);
+        } catch(MovieNotFoundException $e) {
+            $this->throw404($e->getMessage());
+        }
     }
 
     /**
@@ -67,7 +73,11 @@ class MovieController extends Controller
     public function update(MovieDataRequest $request, int $id)
     {
         $movieData = $request->validated();
-        $this->movieService->updateMovie($id, $movieData);
+        try {
+            $this->movieService->updateMovie($id, $movieData);
+        } catch(MovieNotFoundException $e) {
+            $this->throw404($e->getMessage());
+        }
 
         return [
             'status' => true,
@@ -78,7 +88,11 @@ class MovieController extends Controller
 
     public function updateCover(MovieCoverRequest $request, int $id)
     {
-        $this->movieService->storeMovieCover($id, $request->file('coverFile'));
+        try {
+            $this->movieService->storeMovieCover($id, $request->file('coverFile'));
+        } catch(MovieNotFoundException $e) {
+            $this->throw404($e->getMessage());
+        }
 
         return [
             'status' => true,
@@ -92,12 +106,26 @@ class MovieController extends Controller
      */
     public function destroy(int $id)
     {
-        $this->movieService->removeMovie($id);
+        try {
+            $this->movieService->removeMovie($id);
+        } catch(MovieNotFoundException $e) {
+            $this->throw404($e->getMessage());
+        }
 
         return [
             'success' => true,
             'message' =>"The movie was removed successfully",
             'movieId' => $id
         ];
+    }
+
+    private function throw404(string $message)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'status' => false,
+                'message' => $message,
+            ])->setStatusCode(404)
+        );
     }
 }

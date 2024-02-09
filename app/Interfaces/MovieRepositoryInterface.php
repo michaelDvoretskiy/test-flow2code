@@ -10,5 +10,5 @@ interface MovieRepositoryInterface
     public function getOne(int $id);
     public function removeOne(Movie $movie);
     public function setCover(Movie $movie, string $coverPath);
-    public function applyData(Movie $movie, array $movieData);
+    public function update(Movie $movie, array $movieData);
 }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exceptions\MovieNotFoundException;
 use App\Interfaces\MovieRepositoryInterface;
 use App\Interfaces\MovieServiceInretface;
 use App\ModelMappers\MovieListMapper;
@@ -54,26 +55,21 @@ class MovieService implements MovieServiceInretface
     public function createMovie(array $movieData)
     {
         $movie = new Movie();
-        $this->movieRepository->applyData($movie, $movieData);
+        $this->movieRepository->update($movie, $movieData);
 
         return $movie->id;
     }
 
     public function updateMovie(int $id, array $movieData)
     {
-        $this->movieRepository->applyData($this->findMovieOrException($id), $movieData);
+        $this->movieRepository->update($this->findMovieOrException($id), $movieData);
     }
 
     private function findMovieOrException(int $id)
     {
         $movie = $this->movieRepository->getOne($id);
         if (!$movie) {
-            throw new HttpResponseException(
-                response()->json([
-                    'status' => false,
-                    'message' => 'The movie not found',
-                ])->setStatusCode(404)
-            );
+            throw new MovieNotFoundException('The movie not found');
         }
         return $movie;
     }
